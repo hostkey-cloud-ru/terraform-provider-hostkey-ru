@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     hostkey = {
-      source  = "hostkey-cloud/hostkey"
-      version = "~> 0.1"
+      source  = "hostkey-cloud/hostkey-ru"
+      version = "~> 0.2"
     }
   }
   required_version = ">= 1.0"
@@ -10,8 +10,7 @@ terraform {
 
 provider "hostkey" {
   # Prefer env: HOSTKEY_API_KEY (or HOSTKEY_API_TOKEN)
-  # region selects invapi.hostkey.com vs .ru when base_url is unset
-  region = "RU"
+  # Endpoint is invapi.hostkey.ru (use hostkey-cloud/hostkey-com for .com).
 
   # Optional knobs:
   # http_timeout = 60

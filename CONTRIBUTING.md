@@ -28,7 +28,7 @@ Useful Make targets: `make test`, `make build`, `make install`, `make lint`, `ma
 ## Tests
 
 - Unit: `go test ./...` or `make test` (does **not** run acceptance tests).
-- Smoke: `HOSTKEY_API_KEY=… go run ./cmd/smoke` (read-only InvAPI).
+- Smoke: `HOSTKEY_API_KEY=… go run ./cmd/smoke` (read-only InvAPI, this fork → `invapi.hostkey.ru`).
 - Acceptance (billed, production InvAPI):
 
 ```bash
@@ -43,7 +43,7 @@ DNS acceptance needs `HOSTKEY_ACC_DNS_DOMAIN`. Do not point tests at servers you
 
 ## Release
 
-Tag `v*` (e.g. `v0.1.1`) and push it. [`.github/workflows/release.yml`](.github/workflows/release.yml) runs GoReleaser (Actions secrets `GPG_PRIVATE_KEY`, `PASSPHRASE`). Update [CHANGELOG.md](CHANGELOG.md) first. Do not commit API keys or Terraform state.
+Update [CHANGELOG.md](CHANGELOG.md) first. Tag `v*` (e.g. `v0.2.0`) and push the tag. [`.github/workflows/release.yml`](.github/workflows/release.yml) runs GoReleaser (Actions secrets `GPG_PRIVATE_KEY`, `PASSPHRASE`). Registry source is `hostkey-cloud/hostkey-ru`. Do not commit API keys or Terraform state.
 
 ## Pull requests
 

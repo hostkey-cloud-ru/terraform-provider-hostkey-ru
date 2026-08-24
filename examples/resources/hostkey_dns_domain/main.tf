@@ -1,13 +1,12 @@
 terraform {
   required_providers {
     hostkey = {
-      source = "registry.terraform.io/hostkey-cloud/hostkey"
+      source = "registry.terraform.io/hostkey-cloud/hostkey-ru"
     }
   }
 }
 
 provider "hostkey" {
-  region = "RU"
 }
 
 # Creates a pdns zone. Destroy calls pdns/delete_domain.

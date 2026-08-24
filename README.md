@@ -1,14 +1,14 @@
-# Hostkey | Terraform Provider
+# Hostkey | Terraform Provider (RU)
 
-[![Terraform Registry](https://img.shields.io/badge/registry-hostkey--cloud%2Fhostkey-623CE4)](https://registry.terraform.io/providers/hostkey-cloud/hostkey/latest)
+[![Terraform Registry](https://img.shields.io/badge/registry-hostkey--cloud%2Fhostkey--ru-623CE4)](https://registry.terraform.io/providers/hostkey-cloud/hostkey-ru/latest)
 
-Terraform-провайдер для [Hostkey](https://hostkey.ru/): VPS, dedicated, GPU и DNS через [InvAPI](https://hostkey.ru/documentation/apidocs/api_index/).
+Terraform-провайдер для [Hostkey](https://hostkey.ru/) (портал **.ru**, InvAPI `invapi.hostkey.ru`): VPS, dedicated, GPU и DNS.
 
-English: [README.en.md](README.en.md) · Registry: [`hostkey-cloud/hostkey`](https://registry.terraform.io/providers/hostkey-cloud/hostkey/latest)
+English / `.com` portal: [`terraform-provider-hostkey-com`](https://github.com/hostkey-cloud/terraform-provider-hostkey-com) (`hostkey-cloud/hostkey-com`).
 
 ## Документация
 
-Полное описание атрибутов — в [`docs/`](docs/) (страницы [Terraform Registry](https://registry.terraform.io/providers/hostkey-cloud/hostkey/latest/docs)). Примеры: [`examples/`](examples/).
+Полное описание атрибутов — в [`docs/`](docs/) (страницы [Terraform Registry](https://registry.terraform.io/providers/hostkey-cloud/hostkey-ru/latest/docs)). Примеры: [`examples/`](examples/).
 
 ### Ресурсы
 
@@ -44,45 +44,24 @@ English: [README.en.md](README.en.md) · Registry: [`hostkey-cloud/hostkey`](htt
 
 ### 1. Конфигурация
 
-Создайте каталог проекта и файл `main.tf`:
+Готовый пример в одном файле: [`examples/basic/main.tf`](examples/basic/main.tf). Или скопируйте:
 
 ```hcl
 terraform {
   required_providers {
     hostkey = {
-      source  = "hostkey-cloud/hostkey"
-      version = "~> 0.1"
+      source  = "hostkey-cloud/hostkey-ru"
+      version = "~> 0.2"
     }
   }
   required_version = ">= 1.0"
 }
 
-provider "hostkey" {
-  region = var.hostkey_region
-  # api_key — из HOSTKEY_API_KEY (см. ниже) или явно: api_key = var.hostkey_api_key
-}
-
-variable "hostkey_region" {
-  type        = string
-  description = "InvAPI endpoint: RU (.ru) или COM (.com). Не путать с location_name (ДЦ)."
-  default     = "RU"
-}
+provider "hostkey" {}
 
 variable "root_pass" {
-  type        = string
-  sensitive   = true
-  description = "Root-пароль (8–30 символов; см. docs/resources/server.md)."
-}
-
-# Сверьте имена в каталоге перед заказом (read-only, бесплатно):
-data "hostkey_presets" "pico" {
-  location = "NL"
-  name     = "vm.pico"
-}
-
-data "hostkey_traffic_plans" "vm" {
-  location    = "NL"
-  instance_id = data.hostkey_presets.pico.presets[0].id
+  type      = string
+  sensitive = true
 }
 
 resource "hostkey_server" "web" {
@@ -93,10 +72,7 @@ resource "hostkey_server" "web" {
   deploy_period     = "monthly"
   root_pass         = var.root_pass
   power_state       = "on"
-
-  # Для destroy: 0 — в конце периода, 1 — немедленно (если разрешено аккаунтом)
-  cancellation_type   = 1
-  cancellation_reason = "terraform"
+  cancellation_type = 1
 
   timeouts {
     create = "90m"
@@ -104,16 +80,11 @@ resource "hostkey_server" "web" {
   }
 }
 
-output "server_id" {
-  value = hostkey_server.web.id
-}
-
-output "main_ipv4" {
-  value = hostkey_server.web.main_ipv4
-}
+output "server_id"  { value = hostkey_server.web.id }
+output "main_ipv4" { value = hostkey_server.web.main_ipv4 }
 ```
 
-Скопируйте [`examples/basic/terraform.tfvars.example`](examples/basic/terraform.tfvars.example) → `terraform.tfvars` (файл в `.gitignore`, **не коммитить**):
+Скопируйте [`examples/basic/terraform.tfvars.example`](examples/basic/terraform.tfvars.example) → `terraform.tfvars` (в `.gitignore`, **не коммитить**):
 
 ```hcl
 root_pass = "StrongPass1%"
@@ -142,16 +113,15 @@ variable "hostkey_api_key" {
 }
 
 provider "hostkey" {
-  region  = var.hostkey_region
   api_key = var.hostkey_api_key
 }
 ```
 
-Алиасы env: `HOSTKEY_API_TOKEN`. Переопределение URL: `HOSTKEY_BASE_URL` / `HOSTKEY_API_URL`.
+Алиасы env: `HOSTKEY_API_TOKEN`. Переопределение URL (staging / localhost): `HOSTKEY_BASE_URL` / `HOSTKEY_API_URL`. Хост `.com` этим провайдером отклоняется — используйте `hostkey-cloud/hostkey-com`.
 
 ### 3. Если `registry.terraform.io` недоступен (RU)
 
-HashiCorp блокирует часть сетей. Провайдер тот же: `source = "hostkey-cloud/hostkey"`. Аккаунт в Yandex Cloud **не нужен**.
+HashiCorp блокирует часть сетей. Провайдер: `source = "hostkey-cloud/hostkey-ru"`. Аккаунт в Yandex Cloud **не нужен**.
 
 Создайте файл CLI Terraform:
 
@@ -195,7 +165,7 @@ terraform destroy
 
 ## Особенности Hostkey (InvAPI)
 
-* **`region`** (провайдер) — endpoint API (`invapi.hostkey.ru` / `.com`), default в схеме — `COM`. **`location_name`** (ресурс) — дата-центр (`NL`, `US`, `RU`, …).
+* Этот провайдер всегда ходит в **`invapi.hostkey.ru`**. **`location_name`** (ресурс) — дата-центр (`NL`, `US`, `RU`, …), не портал. Для `.com` — `hostkey-cloud/hostkey-com`.
 * Имена **`preset_name` / `os_name` / `traffic_plan_name`** — **точно как в InvAPI**, не как короткие подписи в панели (`bm.v2-promo`, не `v2-promo`).
 * Перед заказом: `data.hostkey_presets` + `data.hostkey_traffic_plans` с **`instance_id`** = id пресета.
 * У dedicated часто **два плана с одним `name` и разной `price`** — используйте подсказку из панели (`- FREE`, `(10000 P)`) или `traffic_plan_id`.
@@ -212,11 +182,11 @@ terraform destroy
 terraform import hostkey_server.web 12345
 ```
 
-Import по числовому id InvAPI — подробнее в [Registry: hostkey_server → Import](https://registry.terraform.io/providers/hostkey-cloud/hostkey/latest/docs/resources/server#import).
+Import по числовому id InvAPI — подробнее в [Registry: hostkey_server → Import](https://registry.terraform.io/providers/hostkey-cloud/hostkey-ru/latest/docs/resources/server#import).
 
 ## Устранение неполадок
 
-Пустой аккаунт (`NO_APPROPRIATE_SERVERS`): InvAPI не выдаёт сессию при **нуле серверов** — Terraform тоже не сможет заказать первый. Закажите первый сервер в панели, затем используйте провайдер. Остальное: [Registry: Troubleshooting](https://registry.terraform.io/providers/hostkey-cloud/hostkey/latest/docs#troubleshooting).
+Пустой аккаунт (`NO_APPROPRIATE_SERVERS`): InvAPI не выдаёт сессию при **нуле серверов** — Terraform тоже не сможет заказать первый. Закажите первый сервер в панели, затем используйте провайдер. Остальное: [Registry: Troubleshooting](https://registry.terraform.io/providers/hostkey-cloud/hostkey-ru/latest/docs#troubleshooting).
 
 ## Разработка
 
