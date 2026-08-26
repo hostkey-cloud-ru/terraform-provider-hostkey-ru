@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/hostkey-cloud/terraform-provider-hostkey-ru/internal/invapi"
+	"github.com/hostkey-cloud-ru/terraform-provider-hostkey-ru/internal/invapi"
 )
 
 func TestValidateIPv4(t *testing.T) {

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     hostkey = {
-      source = "registry.terraform.io/hostkey-cloud/hostkey-ru"
+      source = "registry.terraform.io/hostkey-cloud-ru/hostkey-ru"
     }
   }
 }

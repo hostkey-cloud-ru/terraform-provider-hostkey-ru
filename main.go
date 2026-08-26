@@ -7,11 +7,11 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
 
-	"github.com/hostkey-cloud/terraform-provider-hostkey-ru/internal/provider"
+	"github.com/hostkey-cloud-ru/terraform-provider-hostkey-ru/internal/provider"
 )
 
 // Provider address for local dev: ~/.terraformrc dev_overrides.
-// Production: registry.terraform.io/hostkey-cloud/hostkey-ru
+// Production: registry.terraform.io/hostkey-cloud-ru/hostkey-ru
 var (
 	version = "dev"
 )
@@ -22,7 +22,7 @@ func main() {
 	flag.Parse()
 
 	opts := providerserver.ServeOpts{
-		Address: "registry.terraform.io/hostkey-cloud/hostkey-ru",
+		Address: "registry.terraform.io/hostkey-cloud-ru/hostkey-ru",
 		Debug:   debug,
 	}
 

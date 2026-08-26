@@ -1,6 +1,6 @@
 # Hostkey | Terraform Provider (RU)
 
-[![Terraform Registry](https://img.shields.io/badge/registry-hostkey--cloud%2Fhostkey--ru-623CE4)](https://registry.terraform.io/providers/hostkey-cloud/hostkey-ru/latest)
+[![Terraform Registry](https://img.shields.io/badge/registry-hostkey--cloud--ru%2Fhostkey--ru-623CE4)](https://registry.terraform.io/providers/hostkey-cloud-ru/hostkey-ru/latest)
 
 Terraform-провайдер для [Hostkey](https://hostkey.ru/) (портал **.ru**, InvAPI `invapi.hostkey.ru`): VPS, dedicated, GPU и DNS.
 
@@ -8,7 +8,7 @@ English / `.com` portal: [`terraform-provider-hostkey-com`](https://github.com/h
 
 ## Документация
 
-Полное описание атрибутов — в [`docs/`](docs/) (страницы [Terraform Registry](https://registry.terraform.io/providers/hostkey-cloud/hostkey-ru/latest/docs)). Примеры: [`examples/`](examples/).
+Полное описание атрибутов — в [`docs/`](docs/) (страницы [Terraform Registry](https://registry.terraform.io/providers/hostkey-cloud-ru/hostkey-ru/latest/docs)). Примеры: [`examples/`](examples/).
 
 ### Ресурсы
 
@@ -50,7 +50,7 @@ English / `.com` portal: [`terraform-provider-hostkey-com`](https://github.com/h
 terraform {
   required_providers {
     hostkey = {
-      source  = "hostkey-cloud/hostkey-ru"
+      source  = "hostkey-cloud-ru/hostkey-ru"
       version = "~> 0.2"
     }
   }
@@ -121,7 +121,7 @@ provider "hostkey" {
 
 ### 3. Если `registry.terraform.io` недоступен (RU)
 
-HashiCorp блокирует часть сетей. Провайдер: `source = "hostkey-cloud/hostkey-ru"`. Аккаунт в Yandex Cloud **не нужен**.
+HashiCorp блокирует часть сетей. Провайдер: `source = "hostkey-cloud-ru/hostkey-ru"`. Аккаунт в Yandex Cloud **не нужен**.
 
 Создайте файл CLI Terraform:
 
@@ -182,11 +182,11 @@ terraform destroy
 terraform import hostkey_server.web 12345
 ```
 
-Import по числовому id InvAPI — подробнее в [Registry: hostkey_server → Import](https://registry.terraform.io/providers/hostkey-cloud/hostkey-ru/latest/docs/resources/server#import).
+Import по числовому id InvAPI — подробнее в [Registry: hostkey_server → Import](https://registry.terraform.io/providers/hostkey-cloud-ru/hostkey-ru/latest/docs/resources/server#import).
 
 ## Устранение неполадок
 
-Пустой аккаунт (`NO_APPROPRIATE_SERVERS`): InvAPI не выдаёт сессию при **нуле серверов** — Terraform тоже не сможет заказать первый. Закажите первый сервер в панели, затем используйте провайдер. Остальное: [Registry: Troubleshooting](https://registry.terraform.io/providers/hostkey-cloud/hostkey-ru/latest/docs#troubleshooting).
+Пустой аккаунт (`NO_APPROPRIATE_SERVERS`): InvAPI не выдаёт сессию при **нуле серверов** — Terraform тоже не сможет заказать первый. Закажите первый сервер в панели, затем используйте провайдер. Остальное: [Registry: Troubleshooting](https://registry.terraform.io/providers/hostkey-cloud-ru/hostkey-ru/latest/docs#troubleshooting).
 
 ## Разработка
 

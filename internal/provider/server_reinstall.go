@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 
-	"github.com/hostkey-cloud/terraform-provider-hostkey-ru/internal/invapi"
+	"github.com/hostkey-cloud-ru/terraform-provider-hostkey-ru/internal/invapi"
 )
 
 const defaultUpdateTimeout = 90 * time.Minute

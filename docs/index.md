@@ -11,13 +11,13 @@ description: |-
 
 Портал `.com`: провайдер [`hostkey-cloud/hostkey-com`](https://registry.terraform.io/providers/hostkey-cloud/hostkey-com/latest).
 
-Быстрый старт: [GitHub README](https://github.com/hostkey-cloud/terraform-provider-hostkey-ru/blob/main/README.md).
+Быстрый старт: [GitHub README](https://github.com/hostkey-cloud-ru/terraform-provider-hostkey-ru/blob/main/README.md).
 
 ## Миграция с `hostkey-cloud/hostkey`
 
-1. Смените `source` на `hostkey-cloud/hostkey-ru`, версия `~> 0.2`.
+1. Смените `source` на `hostkey-cloud-ru/hostkey-ru`, версия `~> 0.2`.
 2. Удалите атрибут `region`.
-3. `terraform state replace-provider 'registry.terraform.io/hostkey-cloud/hostkey' 'registry.terraform.io/hostkey-cloud/hostkey-ru'`
+3. `terraform state replace-provider 'registry.terraform.io/hostkey-cloud/hostkey' 'registry.terraform.io/hostkey-cloud-ru/hostkey-ru'`
 
 ## Пример
 
@@ -25,7 +25,7 @@ description: |-
 terraform {
   required_providers {
     hostkey = {
-      source  = "hostkey-cloud/hostkey-ru"
+      source  = "hostkey-cloud-ru/hostkey-ru"
       version = "~> 0.2"
     }
   }
@@ -56,4 +56,4 @@ provider "hostkey" {
 | `Catalog verification failed` | `terraform plan` с настроенным провайдером; проверьте id через data sources |
 | Неоднозначный `traffic_plan_name` | [hostkey_traffic_plans](data-sources/traffic_plans.md) и `instance_id`; подсказки `(10000 P)` / `- FREE` или `traffic_plan_id` |
 | id `pending:<invoice>` | Deploy после Paid-заказа ещё идёт. `plan` — in-place; `apply` ждёт **этот invoice**. Статус — в панели Hostkey |
-| `Failed to query available provider packages` | Зеркало Yandex Cloud в `~/.terraformrc` / `%APPDATA%\terraform.rc`. `source` = `hostkey-cloud/hostkey-ru`. См. [README](https://github.com/hostkey-cloud/terraform-provider-hostkey-ru/blob/main/README.md). |
+| `Failed to query available provider packages` | Зеркало Yandex Cloud в `~/.terraformrc` / `%APPDATA%\terraform.rc`. `source` = `hostkey-cloud-ru/hostkey-ru`. См. [README](https://github.com/hostkey-cloud-ru/terraform-provider-hostkey-ru/blob/main/README.md). |

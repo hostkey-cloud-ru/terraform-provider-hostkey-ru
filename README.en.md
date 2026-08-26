@@ -1,6 +1,6 @@
 # English docs
 
-This repository is the **RU** provider (`hostkey-cloud/hostkey-ru`, InvAPI `invapi.hostkey.ru`).
+This repository is the **RU** provider (`hostkey-cloud-ru/hostkey-ru`, InvAPI `invapi.hostkey.ru`).
 
 For English documentation and the `.com` portal, use:
 

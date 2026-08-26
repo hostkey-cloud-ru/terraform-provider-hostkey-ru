@@ -43,7 +43,7 @@ DNS acceptance needs `HOSTKEY_ACC_DNS_DOMAIN`. Do not point tests at servers you
 
 ## Release
 
-Update [CHANGELOG.md](CHANGELOG.md) first. Tag `v*` (e.g. `v0.2.0`) and push the tag. [`.github/workflows/release.yml`](.github/workflows/release.yml) runs GoReleaser (Actions secrets `GPG_PRIVATE_KEY`, `PASSPHRASE`). Registry source is `hostkey-cloud/hostkey-ru`. Do not commit API keys or Terraform state.
+Update [CHANGELOG.md](CHANGELOG.md) first. Tag `v*` (e.g. `v0.2.0`) and push the tag. [`.github/workflows/release.yml`](.github/workflows/release.yml) runs GoReleaser (Actions secrets `GPG_PRIVATE_KEY`, `PASSPHRASE`). Registry source is `hostkey-cloud-ru/hostkey-ru`. Do not commit API keys or Terraform state.
 
 ## Pull requests
 

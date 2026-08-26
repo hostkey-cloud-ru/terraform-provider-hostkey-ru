@@ -7,16 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
 ## [0.2.0] - 2026-08-24
 
-First release of the **RU-only** provider. GoReleaser tag: **`v0.2.0`**. Registry: [`hostkey-cloud/hostkey-ru`](https://registry.terraform.io/providers/hostkey-cloud/hostkey-ru/latest). Sibling: [`hostkey-cloud/hostkey-com`](https://registry.terraform.io/providers/hostkey-cloud/hostkey-com/latest). Split checklist: [SPLIT.md](SPLIT.md).
+First release of the **RU-only** provider. GoReleaser tag: **`v0.2.0`**. Registry: [`hostkey-cloud-ru/hostkey-ru`](https://registry.terraform.io/providers/hostkey-cloud-ru/hostkey-ru/latest). Sibling: [`hostkey-cloud/hostkey-com`](https://registry.terraform.io/providers/hostkey-cloud/hostkey-com/latest). Split checklist: [SPLIT.md](SPLIT.md).
+
+- GitHub org / Registry namespace for this RU provider is **`hostkey-cloud-ru`**: module `github.com/hostkey-cloud-ru/terraform-provider-hostkey-ru`, Address `registry.terraform.io/hostkey-cloud-ru/hostkey-ru`, docs/examples `source = "hostkey-cloud-ru/hostkey-ru"`. COM stays under `hostkey-cloud/hostkey-com`.
 
 ### Breaking
 
-- **New Registry source.** Install `hostkey-cloud/hostkey-ru` (this repo). The combined source `hostkey-cloud/hostkey` is deprecated and will not receive 0.2.x.
+- **New Registry source.** Install `hostkey-cloud-ru/hostkey-ru` (this repo). The combined source `hostkey-cloud/hostkey` is deprecated and will not receive 0.2.x.
 - **Provider `region` removed.** Each provider talks to one InvAPI portal. This one is always `https://invapi.hostkey.ru/`. For `invapi.hostkey.com` use `hostkey-cloud/hostkey-com`.
 - **`base_url`** may still override staging/`localhost` on `*.hostkey.ru`. Hosts on `*.hostkey.com` are rejected with a pointer to `hostkey-com`.
-- **Go module** is `github.com/hostkey-cloud/terraform-provider-hostkey-ru`. Binary / User-Agent: `terraform-provider-hostkey-ru`.
+- **Go module** is `github.com/hostkey-cloud-ru/terraform-provider-hostkey-ru`. Binary / User-Agent: `terraform-provider-hostkey-ru`.
 
 ### Fixed
 
