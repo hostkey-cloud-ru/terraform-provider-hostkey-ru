@@ -113,7 +113,10 @@ func resultFieldError(raw json.RawMessage) error {
 	var s string
 	if err := json.Unmarshal(raw, &s); err == nil {
 		// InvAPI uses "OK"; some WHMCS endpoints use "success".
-		if s == "OK" || s == "" || strings.EqualFold(s, "success") {
+		// eq_callback/check uses "Not ready" while deploy/reinstall is still running —
+		// that is progress, not a business error (WaitForCallback must keep polling).
+		if s == "OK" || s == "" || strings.EqualFold(s, "success") ||
+			strings.EqualFold(s, "Not ready") {
 			return nil
 		}
 		return &APIError{Result: redactSecrets(s), Body: redactSecrets(string(raw))}
