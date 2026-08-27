@@ -9,6 +9,10 @@
 terraform-provider-hostkey
 terraform-provider-hostkey.exe
 terraform-provider-hostkey_*
+terraform-provider-hostkey-ru
+terraform-provider-hostkey-ru.exe
+terraform-provider-hostkey-com
+terraform-provider-hostkey-com.exe
 __debug_bin*
 debug
 
@@ -59,6 +63,12 @@ credentials.json
 *.asc
 hostkey-gpg-*.asc
 
+# Internal security / audit notes (keep local; do not publish)
+SECURITY_AUDIT.md
+SECURITY_AUDIT*.md
+ADVERSARIAL_REVIEW.md
+docs\index.md
+
 # Local acceptance / smoke logs
 acc-*.log
 *.log
@@ -94,3 +104,16 @@ examples/**/terraform.tfstate
 examples/**/terraform.tfstate.*
 examples/**/*.tfvars
 !examples/**/*.tfvars.example
+terraform-dev-override.rc
+examples/resources/hostkey_server_3vm_matrix/main.tf
+agent.md
+AGENTS.md
+examples/hostname-os-check/terraform-dev.rc
+examples/hostname-os-check/main.tf
+examples/multi-vm/terraform-dev.rc
+examples/multi-vm/main.tf
+
+# One-off local probes (do not ship)
+cmd/tmp*/
+cmd/tmphn/
+cmd/tmposhn/
