@@ -71,6 +71,35 @@ func TestBuildOrderRequest_TrimsHostname(t *testing.T) {
 	}
 }
 
+func TestResolveOrderInvoice_NeverUnknown(t *testing.T) {
+	t.Parallel()
+	cases := []struct {
+		name    string
+		invoice int
+		want    int64
+	}{
+		{"invoice present", 12345, 12345},
+		// Observed in practice: an order paid directly from account balance
+		// returned no invoice at all. That used to leave state.Invoice as the
+		// Unknown value inherited from plan, which Terraform rejects with
+		// "Provider returned invalid result object after apply" — 0 is the
+		// correct known value for "no invoice", not "not yet resolved".
+		{"no invoice (paid from balance)", 0, 0},
+	}
+	for _, tc := range cases {
+		got := resolveOrderInvoice(tc.invoice)
+		if got.IsUnknown() {
+			t.Fatalf("%s: resolveOrderInvoice(%d) is Unknown, must always resolve to a known value", tc.name, tc.invoice)
+		}
+		if got.IsNull() {
+			t.Fatalf("%s: resolveOrderInvoice(%d) is Null, must always resolve to a known value", tc.name, tc.invoice)
+		}
+		if want := types.Int64Value(tc.want); !got.Equal(want) {
+			t.Fatalf("%s: resolveOrderInvoice(%d) = %v, want %v", tc.name, tc.invoice, got, want)
+		}
+	}
+}
+
 func TestReadServerState_UsesLiveHostnameFromTags(t *testing.T) {
 	t.Parallel()
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

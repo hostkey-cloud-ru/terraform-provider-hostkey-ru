@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `hostkey_server` `Create`: `invoice` attribute could be left at its `Unknown` planned value when `order_instance` returned no invoice id at all (e.g. an order paid directly from account balance), tripping Terraform's "Provider returned invalid result object after apply" consistency check and auto-tainting the resource. `0` is a legitimate, known value ("no invoice for this order"), not "not yet resolved" — extracted `resolveOrderInvoice` and call it unconditionally instead of only when `orderResp.Invoice > 0`.
+
 ## [0.2.1] - 2026-08-27
 
 ### Fixed

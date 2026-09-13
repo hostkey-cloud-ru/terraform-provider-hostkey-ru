@@ -830,9 +830,7 @@ func (r *serverResource) Create(ctx context.Context, req resource.CreateRequest,
 		)
 	}
 
-	if orderResp.Invoice > 0 {
-		state.Invoice = types.Int64Value(int64(orderResp.Invoice))
-	}
+	state.Invoice = resolveOrderInvoice(orderResp.Invoice)
 	if err := r.syncTags(ctx, serverID, plan.Tags, types.MapNull(types.StringType)); err != nil {
 		resp.Diagnostics.AddWarning("Tags", err.Error())
 	} else if live, err := r.readUserTags(ctx, serverID); err == nil {
@@ -1467,6 +1465,17 @@ func (r *serverResource) applyPowerState(ctx context.Context, serverID int, plan
 	default:
 		return fmt.Errorf("unsupported power_state %q", plan.PowerState.ValueString())
 	}
+}
+
+// resolveOrderInvoice returns the state value for the invoice attribute given
+// order_instance's returned invoice id. It must always return a known value:
+// some orders (e.g. paid directly from account balance) never get a WHMCS
+// invoice at all, and 0 is the correct "no invoice for this order" value for
+// those — not an unresolved one. Leaving invoice as the Unknown value
+// inherited from plan (Computed, no config value) trips Terraform's
+// "Provider returned invalid result object after apply" check.
+func resolveOrderInvoice(orderInvoice int) types.Int64 {
+	return types.Int64Value(int64(orderInvoice))
 }
 
 func buildOrderRequest(plan serverModel) invapi.OrderInstanceRequest {
