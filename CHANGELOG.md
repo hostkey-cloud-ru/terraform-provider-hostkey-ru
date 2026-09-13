@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `eq_callback/check`: treat InvAPI `result="Stage"` as in-progress, not a business error. It was being wrapped into an `APIError` whose raw body then tripped `terminalFailReason`'s blob-wide `"error"` substring match, misclassifying a healthy in-progress deploy/reinstall as cancelled/failed and aborting the poll early instead of waiting out the configured timeout.
+
 ## [0.2.1] - 2026-08-27
 
 ### Fixed

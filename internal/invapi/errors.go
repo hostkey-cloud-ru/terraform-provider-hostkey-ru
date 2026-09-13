@@ -113,10 +113,15 @@ func resultFieldError(raw json.RawMessage) error {
 	var s string
 	if err := json.Unmarshal(raw, &s); err == nil {
 		// InvAPI uses "OK"; some WHMCS endpoints use "success".
-		// eq_callback/check uses "Not ready" while deploy/reinstall is still running —
-		// that is progress, not a business error (WaitForCallback must keep polling).
+		// eq_callback/check uses "Not ready" while deploy/reinstall is still
+		// running, and "Stage" for an intermediate provisioning step — both are
+		// progress, not a business error (WaitForCallback must keep polling).
+		// Observed in practice: a "Stage" result was being wrapped into an
+		// APIError here, whose Body (the full raw response) then tripped
+		// terminalFailReason's blob-wide "error" substring match downstream,
+		// misclassifying a healthy in-progress deploy as cancelled/failed.
 		if s == "OK" || s == "" || strings.EqualFold(s, "success") ||
-			strings.EqualFold(s, "Not ready") {
+			strings.EqualFold(s, "Not ready") || strings.EqualFold(s, "Stage") {
 			return nil
 		}
 		return &APIError{Result: redactSecrets(s), Body: redactSecrets(string(raw))}
