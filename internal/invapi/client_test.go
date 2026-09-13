@@ -26,6 +26,16 @@ func TestDecodeAPIError_NotReady(t *testing.T) {
 	}
 }
 
+// Regression test: an eq_callback/check response with result="Stage" was
+// being wrapped into an APIError, and its raw body (containing an unrelated
+// "error" field) then tripped terminalFailReason's blob-wide substring match,
+// aborting a healthy in-progress deploy poll as terminal cancel/fail.
+func TestDecodeAPIError_Stage(t *testing.T) {
+	if err := decodeAPIError([]byte(`{"result":"Stage","error":null}`)); err != nil {
+		t.Fatalf("Stage must not be an API error (callback poll): %v", err)
+	}
+}
+
 func TestDecodeAPIError_Message(t *testing.T) {
 	err := decodeAPIError([]byte(`{"code":1,"error":"boom"}`))
 	if err == nil {
