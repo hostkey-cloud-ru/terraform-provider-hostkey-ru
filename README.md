@@ -65,14 +65,15 @@ variable "root_pass" {
 }
 
 resource "hostkey_server" "web" {
-  preset_name       = "vm.pico"
-  location_name     = "NL"
-  os_name           = "Ubuntu 22.04"
-  traffic_plan_name = "3 TB / 1 Gbps VM"
-  deploy_period     = "monthly"
-  root_pass         = var.root_pass
-  power_state       = "on"
-  cancellation_type = 1
+  preset_name         = "vm.pico"
+  location_name       = "NL"
+  os_name             = "Ubuntu 22.04"
+  traffic_plan_name   = "3 TB / 1 Gbps VM"
+  deploy_period       = "monthly"
+  root_pass           = var.root_pass
+  power_state         = "on"
+  cancellation_type   = 1 # 0 = end of paid period, 1 = immediate
+  cancellation_reason = "terraform example destroy"
 
   timeouts {
     create = "90m"
@@ -161,7 +162,7 @@ Terraform покажет план изменений и запросит под�
 terraform destroy
 ```
 
-Снова подтвердите **`yes`**. Вызывается `whmcs/request_cancellation` с `cancellation_type` / `cancellation_reason` из ресурса.
+Снова подтвердите **`yes`**. Вызывается `whmcs/request_cancellation` с обязательными `cancellation_type` (`0` — в конце оплаченного периода, `1` — сразу) и `cancellation_reason` (как форма отказа в личном кабинете). Задайте их в HCL **до** destroy — Terraform не запрашивает причину интерактивно.
 
 ## Особенности Hostkey (InvAPI)
 

@@ -1,6 +1,0 @@
-provider_installation {
-  dev_overrides {
-    "registry.terraform.io/hostkey-cloud-ru/hostkey-ru" = "C:/Users/dms/go/bin"
-  }
-  direct {}
-}
